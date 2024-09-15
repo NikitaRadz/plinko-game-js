@@ -30,10 +30,11 @@ h1 {
 }
 
 .controlsBox {
-    display: block;
+    display: inline;
     padding: 10px;
     max-width: 20%;
     height: 70vh;
+    float:left
 }
 
 #moneyInput {
@@ -49,7 +50,7 @@ h1 {
 .controlBtn {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     display: inline;
-    background-color: green;
+    background-color: #302a98;
     font-size: 18px;
     border-radius: 5px;
     color:rgb(210, 234, 255);
@@ -65,5 +66,14 @@ h1 {
 
 #dropBtn {
     width: 100%;
-    background-color: red;
+    background-color: green;
+}
+
+.gameContainer {
+    margin: 10px;
+    margin-left: 30px;
+    display: inline-block;
+    background-color: #302a98;
+    width: 75%;
+    height: 70vh;
 }
