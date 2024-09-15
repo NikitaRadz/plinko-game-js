@@ -1,0 +1,67 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background: rgb(19,19,93);
+}
+
+h1 {
+    color:rgb(210, 234, 255);
+}
+
+.headerContainer {
+    text-align: center;
+}
+
+.titleBox {
+    background-color: #302a98; /* Change this */
+    display: inline-block;
+    padding-inline: 10px;
+    border-radius: 15px;
+}
+
+#title {
+    margin-block: 5%;
+}
+
+.totalBox { 
+    background-color: green;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.controlsBox {
+    display: block;
+    max-width: 20%;
+    height: 70vh;
+}
+
+#moneyInput {
+    text-align: center;
+    font-size: 150%;
+    background-color: purple;
+
+    box-sizing: border-box;
+    border: none;
+    width: 100%;
+}
+
+.controlBtn {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: inline;
+    background-color: green;
+    font-size: 18px;
+    border-radius: 5px;
+    color:rgb(210, 234, 255);
+    min-width:48%;
+    margin-top: 1vh;
+    cursor: pointer;
+}
+
+#allInBtn {
+    width: 100%;
+}
+
+#dropBtn {
+    width: 100%;
+    background-color: red;
+}

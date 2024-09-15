@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Plinko Game</title>
+        <link rel="stylesheet" href="game.css">
+    </head>
+    <body>
+        <div class="headerContainer">
+            <div class="titleBox">
+                <h1 id="title">Plinko Game</h1>
+            </div>
+        </div>
+        <div class="totalBox">
+            <h1 id="totalValue">$100</h1> <!-- ID for javascript -->
+        </div>
+        <div class="controlsBox">
+            <input type="number" id="moneyInput">
+            <button type="button" class="controlBtn" id="allInBtn">All in</button>
+            <button type="button" class="controlBtn" id="halfBtn">1/2x</button>
+            <button type="button" class="controlBtn" id="doubleBtn">2x</button>
+            <button type="button" class="controlBtn" id="dropBtn">Drop</button>
+        </div>
+        <div class="gameContainer">
+            <!-- Actual Game here -->
+        </div>
+        <script src="game.js"></script> <!-- Script for UI -->
+                                        <!-- Script for Game Logic -->
+    </body>
+</html>
