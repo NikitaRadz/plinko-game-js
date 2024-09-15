@@ -31,6 +31,7 @@ h1 {
 
 .controlsBox {
     display: block;
+    padding: 10px;
     max-width: 20%;
     height: 70vh;
 }
@@ -52,7 +53,8 @@ h1 {
     font-size: 18px;
     border-radius: 5px;
     color:rgb(210, 234, 255);
-    min-width:48%;
+    min-width: 48%;
+    min-height: 2.2em;
     margin-top: 1vh;
     cursor: pointer;
 }
