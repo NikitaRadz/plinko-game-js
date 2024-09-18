@@ -41,7 +41,6 @@ h1 {
     text-align: center;
     font-size: 150%;
     background-color: purple;
-
     box-sizing: border-box;
     border: none;
     width: 100%;
@@ -54,7 +53,7 @@ h1 {
     font-size: 18px;
     border-radius: 5px;
     color:rgb(210, 234, 255);
-    min-width: 48%;
+    min-width: 49%;
     min-height: 2.2em;
     margin-top: 1vh;
     cursor: pointer;
@@ -71,11 +70,12 @@ h1 {
 
 .gameContainer {
     margin: 10px;
-    margin-left: 30px;
     display: inline-block;
     background-color: #302a98;
     width: 75%;
     height: 70vh;
+    min-width: 700px;
+    min-height: 450px;
 }
 
 #gameCanvas {
