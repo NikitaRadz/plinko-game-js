@@ -33,22 +33,25 @@ let leftWall = Bodies.rectangle(
     gameCanvas.clientHeight/2,
     5,
     400, 
-    {isStatic:true});
+    {isStatic:true}
+);
 let rightWall = Bodies.rectangle(
     (gameCanvas.clientWidth/2)+270,
     gameCanvas.clientHeight/2,
     5,
     400,
-    {isStatic:true});
+    {isStatic:true}
+);
 let ground = Bodies.rectangle(
     gameCanvas.clientWidth/2,
     (gameCanvas.clientHeight/2)+200,
     545,
-    5
-)
+    5,
+    {isStatic:true}
+);
 let pegPyramid = Matter.Composite.create();
 createPyramid(
-    pegPyramid, 9, 10,30, (gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150
+    pegPyramid, 9, 10,35, (gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150
 );
 
 // Initial position of peg pyramid
@@ -56,6 +59,13 @@ let oldPyramidVector = Matter.Vector.create((gameCanvas.clientWidth/2)+15, (game
 
 // Spawns all objects in world
 World.add(world,[leftWall,rightWall,ground, pegPyramid]);
+
+// Testing out ball spawn below
+
+// let bigCircle = Bodies.circle(550,0,8,
+
+// );
+// World.add(world,bigCircle);
 
 // Runs both engine and the renderer
 Runner.run(engine);
@@ -94,7 +104,15 @@ function handleResize(gameCanvas) {
     Matter.Composite.translate(pegPyramid, pyramidVectorDelta);
 }
 
-function spawnBall() {}
+window.addEventListener("resize", () => handleResize(gameCanvas));
+
+function spawnBall() {
+    let newBall = Bodies.circle(
+        gameCanvas.clientWidth,
+        gameCanvas.clientHeight,
+        10
+    )
+}
 
 function createPyramid(composite,rows,radius,gap,startX,startY) {
     // Loop through each row creating the circles
@@ -109,25 +127,24 @@ function createPyramid(composite,rows,radius,gap,startX,startY) {
         for (let circ = 0; circ < circlesInRow; circ++) {
             let x = centreX + circ * ((radius * 2) + gap) + radius;
             let y = startY + currentRow * ((radius * 2) + gap);
-            let circle = Bodies.circle(x, y, radius);
-
+            let circle = Bodies.circle(x, y, radius, {isStatic:true});
             Matter.Composite.add(composite, circle);
         }
     }
     
     // Removes top circle from pyramid so ball can spawn there
-    Matter.Composite.remove(pegPyramid, pegPyramid.bodies[pegPyramid.bodies.length-1])
-
+    for (let layer = 1; layer < 4; layer++) {
+        Matter.Composite.remove(pegPyramid, pegPyramid.bodies[pegPyramid.bodies.length-1]);
+    }
+    
     // Makes the pyramid the right way up
     let rotationVector = Matter.Vector.create(gameCanvas.clientWidth/2,gameCanvas.clientHeight/2);
     Matter.Composite.rotate(pegPyramid, Math.PI, rotationVector);
 }
 
-window.addEventListener("resize", () => handleResize(gameCanvas));
 
 /**
  * TODO:
- * - Create pins that the balls can bounce off of
  * - Create balls that can drop
  * - Create ground that the balls can dorp into and be deleted once they hit the multiplier
  */
