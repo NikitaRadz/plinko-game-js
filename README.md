@@ -3,4 +3,4 @@ This is my version of a Plinko-style game made in HTML and Javascript using the 
 I made this mostly just to practise my frontend skills as well as using matter.js for the first time. 
 
 # Important!!!
-Make sure you have matter.js installed otherwise it will *not* run correctly
+Make sure you do not touch matter.js otherwise it will *not* run correctly
