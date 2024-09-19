@@ -60,8 +60,10 @@ let pegStack = Composites.pyramid(
 )
 
 // peg stack initial position
-let startPositionX = (gameCanvas.clientWidth/2)-282;
-let startPositionY = (gameCanvas.clientHeight/2)-200;
+let pegStartPos = Matter.Vector.create(
+    (gameCanvas.clientWidth/2)-282,
+    (gameCanvas.clientHeight/2)-200
+);
 
 // Spawns all objects in world
 World.add(world,[circleA,leftWall,rightWall,ground,pegStack]);
@@ -100,20 +102,27 @@ function handleResize(gameCanvas) {
         )
     )
     // Changes position of the peg stack relative to the viewport
-    let newPositionX = (gameCanvas.clientWidth/2)-282;
-    let newPositionY = (gameCanvas.clientHeight/2)-200;
-    let diffX = newPositionX - startPositionX;
-    let diffY = newPositionY - startPositionY;
-    let diffVector = Matter.Vector.create(diffX, diffY);
-    Matter.Composite.translate(pegStack, diffVector);
-    startPositionX = newPositionX;
-    startPositionY = newPositionY;
+    let pegNewPos = Matter.Vector.create(
+        (gameCanvas.clientWidth/2)-282,
+        (gameCanvas.clientHeight/2)-200
+    );
+    let pegPosDiff = Matter.Vector.sub(pegNewPos, pegStartPos);
+    Matter.Composite.translate(pegStack, pegPosDiff);
+    pegStartPos = pegNewPos;
 }
 
 function spawnBall() {}
 
 window.addEventListener("resize", () => handleResize(gameCanvas));
 console.log(pegStack.bodies[0].position,"initial position");
+
+// let firstVecTest = pegStack.bodies[0].position;
+// let endVecTest = Matter.Vector.create((gameCanvas.clientWidth/2)-282, (gameCanvas.clientHeight/2)-200);
+// let diffVecTest = Matter.Vector.sub(firstVecTest,endVecTest);
+// console.log("firstVecTest",firstVecTest);
+// console.log("endVecTest",endVecTest);
+// console.log("diffVecTest:",diffVecTest);
+
 /**
  * TODO:
  * - Create pins that the balls can bounce off of
