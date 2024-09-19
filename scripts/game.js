@@ -49,16 +49,22 @@ let ground = Bodies.rectangle(
 )
 
 // Spawns pins as barriers for balls to bounce off of
-let pinStack = Composites.pyramid(
+let pegStack = Composites.pyramid(
     (gameCanvas.clientWidth/2)-282,
     (gameCanvas.clientHeight/2)-200,
-    20,9,20,30,
+    20,9,
+    20,30,
     function(x,y) {
         return Bodies.circle(x, y, 5);
     }
 )
+
+// peg stack initial position
+let startPositionX = (gameCanvas.clientWidth/2)-282;
+let startPositionY = (gameCanvas.clientHeight/2)-200;
+
 // Spawns all objects in world
-World.add(world,[circleA,leftWall,rightWall,ground,pinStack]);
+World.add(world,[circleA,leftWall,rightWall,ground,pegStack]);
 
 // Runs both engine and the renderer
 Runner.run(engine);
@@ -93,17 +99,24 @@ function handleResize(gameCanvas) {
             (gameCanvas.clientHeight/2)+200
         )
     )
+    // Changes position of the peg stack relative to the viewport
+    let newPositionX = (gameCanvas.clientWidth/2)-282;
+    let newPositionY = (gameCanvas.clientHeight/2)-200;
+    let diffX = newPositionX - startPositionX;
+    let diffY = newPositionY - startPositionY;
+    let diffVector = Matter.Vector.create(diffX, diffY);
+    Matter.Composite.translate(pegStack, diffVector);
+    startPositionX = newPositionX;
+    startPositionY = newPositionY;
 }
 
-function spawnBall() {
-
-}
+function spawnBall() {}
 
 window.addEventListener("resize", () => handleResize(gameCanvas));
-
+console.log(pegStack.bodies[0].position,"initial position");
 /**
  * TODO:
- * - Create ground that the balls can dorp into and be deleted once they hit the multiplier
- * - Create balls that can drop
  * - Create pins that the balls can bounce off of
+ * - Create balls that can drop
+ * - Create ground that the balls can dorp into and be deleted once they hit the multiplier
  */
