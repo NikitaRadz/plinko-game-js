@@ -28,7 +28,6 @@ let render = Render.create({
 let world = engine.world;
 
 // Objects in game world
-let circleA = Bodies.circle(500 ,500 ,30);
 let leftWall = Bodies.rectangle(
     (gameCanvas.clientWidth/2)-270,
     gameCanvas.clientHeight/2,
@@ -47,26 +46,13 @@ let ground = Bodies.rectangle(
     545,
     5
 )
-
-// Spawns pins as barriers for balls to bounce off of
-let pegStack = Composites.pyramid(
-    (gameCanvas.clientWidth/2)-282,
-    (gameCanvas.clientHeight/2)-200,
-    20,9,
-    20,30,
-    function(x,y) {
-        return Bodies.circle(x, y, 5);
-    }
-)
-
-// peg stack initial position
-let pegStartPos = Matter.Vector.create(
-    (gameCanvas.clientWidth/2)-282,
-    (gameCanvas.clientHeight/2)-200
+let pegStack = Matter.Composite.create();
+createPyramid(
+    pegStack, 9, 10,30, (gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150
 );
 
 // Spawns all objects in world
-World.add(world,[circleA,leftWall,rightWall,ground,pegStack]);
+World.add(world,[leftWall,rightWall,ground, pegStack]);
 
 // Runs both engine and the renderer
 Runner.run(engine);
@@ -101,27 +87,38 @@ function handleResize(gameCanvas) {
             (gameCanvas.clientHeight/2)+200
         )
     )
-    // Changes position of the peg stack relative to the viewport
-    let pegNewPos = Matter.Vector.create(
-        (gameCanvas.clientWidth/2)-282,
-        (gameCanvas.clientHeight/2)-200
-    );
-    let pegPosDiff = Matter.Vector.sub(pegNewPos, pegStartPos);
-    Matter.Composite.translate(pegStack, pegPosDiff);
-    pegStartPos = pegNewPos;
 }
 
 function spawnBall() {}
 
-window.addEventListener("resize", () => handleResize(gameCanvas));
-console.log(pegStack.bodies[0].position,"initial position");
+function createPyramid(composite,rows,radius,gap,startX,startY) {
+    // Loop through each row creating the circles
+    for (let currentRow = 0; currentRow < rows; currentRow++) {
 
-// let firstVecTest = pegStack.bodies[0].position;
-// let endVecTest = Matter.Vector.create((gameCanvas.clientWidth/2)-282, (gameCanvas.clientHeight/2)-200);
-// let diffVecTest = Matter.Vector.sub(firstVecTest,endVecTest);
-// console.log("firstVecTest",firstVecTest);
-// console.log("endVecTest",endVecTest);
-// console.log("diffVecTest:",diffVecTest);
+        let circlesInRow = rows - currentRow;
+
+        // Calculate the x at the centre of the pyramid
+        let centreX = startX - circlesInRow * (radius + gap/2);
+
+        // Create each circle in the row
+        for (let circ = 0; circ < circlesInRow; circ++) {
+            let x = centreX + circ * ((radius * 2) + gap) + radius;
+            let y = startY + currentRow * ((radius * 2) + gap);
+            let circle = Bodies.circle(x, y, radius);
+
+            Matter.Composite.add(composite, circle);
+        }
+    }
+    
+    // Removes top circle from pyramid so ball can spawn there
+    Matter.Composite.remove(pegStack, pegStack.bodies[pegStack.bodies.length-1])
+
+    // Makes the pyramid the right way up
+    let rotationVector = Matter.Vector.create(gameCanvas.clientWidth/2,gameCanvas.clientHeight/2);
+    Matter.Composite.rotate(pegStack, Math.PI, rotationVector);
+}
+
+window.addEventListener("resize", () => handleResize(gameCanvas));
 
 /**
  * TODO:
