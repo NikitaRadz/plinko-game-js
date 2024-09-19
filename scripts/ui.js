@@ -1,9 +1,10 @@
 let totalMoney = document.getElementById('totalValue'); // Total Money owned
 let betInput = document.getElementById('moneyInput'); // Betting value inputted
 
-let allinBtn = document.getElementById('allInBtn');
-let doubleBtn = document.getElementById('doubleBtn');
-let halfBtn = document.getElementById('halfBtn');
+const allinBtn = document.getElementById('allInBtn');
+const doubleBtn = document.getElementById('doubleBtn');
+const halfBtn = document.getElementById('halfBtn');
+const dropBtn = document.getElementById('dropBtn');
 
 // Set bet input default to $100
 betInput.value = 100;

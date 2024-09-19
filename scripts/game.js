@@ -46,13 +46,16 @@ let ground = Bodies.rectangle(
     545,
     5
 )
-let pegStack = Matter.Composite.create();
+let pegPyramid = Matter.Composite.create();
 createPyramid(
-    pegStack, 9, 10,30, (gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150
+    pegPyramid, 9, 10,30, (gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150
 );
 
+// Initial position of peg pyramid
+let oldPyramidVector = Matter.Vector.create((gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150);
+
 // Spawns all objects in world
-World.add(world,[leftWall,rightWall,ground, pegStack]);
+World.add(world,[leftWall,rightWall,ground, pegPyramid]);
 
 // Runs both engine and the renderer
 Runner.run(engine);
@@ -63,30 +66,32 @@ function handleResize(gameCanvas) {
     render.canvas.width = gameCanvas.clientWidth;
     render.canvas.height = gameCanvas.clientHeight;
 
-    // Changes position of left wall relative to the viewport
     Matter.Body.setPosition(
         leftWall,
         Matter.Vector.create(
             (gameCanvas.clientWidth/2)-270,
             gameCanvas.clientHeight/2,
         )
-    )
-    // Changes position of right wall relative to the viewport
+    );
     Matter.Body.setPosition(
         rightWall,
         Matter.Vector.create(
             (gameCanvas.clientWidth/2)+270,
             gameCanvas.clientHeight/2
         )
-    )
-    // Changes position of ground relative to the viewport
+    );
     Matter.Body.setPosition(
         ground,
         Matter.Vector.create(
             gameCanvas.clientWidth/2,
             (gameCanvas.clientHeight/2)+200
         )
-    )
+    );
+
+    let newPyramidVector = Matter.Vector.create((gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150);
+    let pyramidVectorDelta = Matter.Vector.sub(newPyramidVector, oldPyramidVector);
+    oldPyramidVector = newPyramidVector;
+    Matter.Composite.translate(pegPyramid, pyramidVectorDelta);
 }
 
 function spawnBall() {}
@@ -111,11 +116,11 @@ function createPyramid(composite,rows,radius,gap,startX,startY) {
     }
     
     // Removes top circle from pyramid so ball can spawn there
-    Matter.Composite.remove(pegStack, pegStack.bodies[pegStack.bodies.length-1])
+    Matter.Composite.remove(pegPyramid, pegPyramid.bodies[pegPyramid.bodies.length-1])
 
     // Makes the pyramid the right way up
     let rotationVector = Matter.Vector.create(gameCanvas.clientWidth/2,gameCanvas.clientHeight/2);
-    Matter.Composite.rotate(pegStack, Math.PI, rotationVector);
+    Matter.Composite.rotate(pegPyramid, Math.PI, rotationVector);
 }
 
 window.addEventListener("resize", () => handleResize(gameCanvas));
