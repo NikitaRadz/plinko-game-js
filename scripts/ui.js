@@ -31,3 +31,7 @@ halfBtn.addEventListener("click", function() {
         betInput.value /= 2;
     }
 });
+
+dropBtn.addEventListener("click", function(){
+    spawnBall();
+});

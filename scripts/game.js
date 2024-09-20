@@ -26,6 +26,7 @@ let render = Render.create({
 
 // Create the game "world"
 let world = engine.world;
+engine.gravity.y = 0.4
 
 // Objects in game world
 let leftWall = Bodies.rectangle(
@@ -51,7 +52,7 @@ let ground = Bodies.rectangle(
 );
 let pegPyramid = Matter.Composite.create();
 createPyramid(
-    pegPyramid, 9, 10,35, (gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150
+    pegPyramid, 10, 6,35, (gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150
 );
 
 // Initial position of peg pyramid
@@ -59,13 +60,6 @@ let oldPyramidVector = Matter.Vector.create((gameCanvas.clientWidth/2)+15, (game
 
 // Spawns all objects in world
 World.add(world,[leftWall,rightWall,ground, pegPyramid]);
-
-// Testing out ball spawn below
-
-// let bigCircle = Bodies.circle(550,0,8,
-
-// );
-// World.add(world,bigCircle);
 
 // Runs both engine and the renderer
 Runner.run(engine);
@@ -107,11 +101,11 @@ function handleResize(gameCanvas) {
 window.addEventListener("resize", () => handleResize(gameCanvas));
 
 function spawnBall() {
+    let offSet = Math.random()*5;
     let newBall = Bodies.circle(
-        gameCanvas.clientWidth,
-        gameCanvas.clientHeight,
-        10
-    )
+        (gameCanvas.clientWidth/2)+offSet,offSet,10,{restitution:0.1}
+    );
+    World.add(world, newBall);
 }
 
 function createPyramid(composite,rows,radius,gap,startX,startY) {
