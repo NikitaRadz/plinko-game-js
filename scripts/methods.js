@@ -32,11 +32,17 @@ function handleResize(gameCanvas) {
 }
 
 function spawnBall() {
-    let offSet = Math.random()*5;
-    let newBall = Bodies.circle(
-        (gameCanvas.clientWidth/2)+offSet,offSet,10,{restitution:0.1}
-    );
-    World.add(world, newBall);
+    let ballValue = betInput.value*1;
+    if (ballValue >= 1 && ballValue <= totalMoney.innerHTML.substring(1)) {
+        let offSet = Math.random()*5;
+        let newBall = Bodies.circle(
+            (gameCanvas.clientWidth/2)+offSet,offSet,10,{restitution:0.1}
+        );
+        World.add(world, newBall);
+
+        let newTotal = totalMoney.innerHTML.substring(1) - ballValue;
+        totalMoney.innerHTML = '$' + newTotal;
+    }
 }
 
 function createPyramid(composite,rows,radius,gap,startX,startY) {

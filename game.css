@@ -59,13 +59,8 @@ h1 {
     cursor: pointer;
 }
 
-#allInBtn {
+#allInBtn, #dropBtn, #resetBtn {
     width: 100%;
-}
-
-#dropBtn {
-    width: 100%;
-    background-color: #302a98;
 }
 
 .gameContainer {

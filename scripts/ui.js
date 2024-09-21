@@ -5,6 +5,7 @@ const allinBtn = document.getElementById('allInBtn');
 const doubleBtn = document.getElementById('doubleBtn');
 const halfBtn = document.getElementById('halfBtn');
 const dropBtn = document.getElementById('dropBtn');
+const resetBtn = document.getElementById('resetBtn');
 
 // Set bet input default to $100
 betInput.value = 100;
@@ -32,6 +33,10 @@ halfBtn.addEventListener("click", function() {
     }
 });
 
-dropBtn.addEventListener("click", function(){
+dropBtn.addEventListener("click", function() {
     spawnBall();
+});
+
+resetBtn.addEventListener("click", function() {
+    totalMoney.innerHTML = "$100";
 });
