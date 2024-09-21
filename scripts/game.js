@@ -50,9 +50,13 @@ let ground = Bodies.rectangle(
     5,
     {isStatic:true}
 );
+
+let ballCollisionGroup = Matter.Body.nextGroup(true);
+
 let pegPyramid = Matter.Composite.create();
+
 createPyramid(
-    pegPyramid, 10, 6,35, (gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150
+    pegPyramid, 12, 6,30, (gameCanvas.clientWidth/2)+15, (gameCanvas.clientHeight/2)-150
 );
 
 // Initial position of peg pyramid

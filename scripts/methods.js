@@ -34,9 +34,16 @@ function handleResize(gameCanvas) {
 function spawnBall() {
     let ballValue = betInput.value*1;
     if (ballValue >= 1 && ballValue <= totalMoney.innerHTML.substring(1)) {
-        let offSet = Math.random()*5;
+        let offSet = Math.random()*2 - 1;
         let newBall = Bodies.circle(
-            (gameCanvas.clientWidth/2)+offSet,offSet,10,{restitution:0.1}
+            (gameCanvas.clientWidth/2)+offSet,25+offSet,8,{
+                restitution:0.2,
+                collisionFilter: {
+                    group: ballCollisionGroup,
+                    category: 0x0001,
+                    mask: 0x0001
+                }
+            }
         );
         World.add(world, newBall);
 
@@ -57,7 +64,7 @@ function createPyramid(composite,rows,radius,gap,startX,startY) {
         // Create each circle in the row
         for (let circ = 0; circ < circlesInRow; circ++) {
             let x = centreX + circ * ((radius * 2) + gap) + radius;
-            let y = startY + currentRow * ((radius * 2) + gap);
+            let y = startY + currentRow * ((radius * 2) + gap-2);
             let circle = Bodies.circle(x, y, radius, {isStatic:true});
             Matter.Composite.add(composite, circle);
         }
