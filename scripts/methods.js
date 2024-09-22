@@ -29,6 +29,11 @@ function handleResize(gameCanvas) {
     let pyramidVectorDelta = Matter.Vector.sub(newPyramidVector, oldPyramidVector);
     oldPyramidVector = newPyramidVector;
     Matter.Composite.translate(pegPyramid, pyramidVectorDelta);
+
+    let newMultiVector = Matter.Vector.create((gameCanvas.clientWidth/2)-210, (gameCanvas.clientHeight/2)+180);
+    let multiVectorDelta = Matter.Vector.sub(newMultiVector,oldMultiVector);
+    oldMultiVector = newMultiVector;
+    Matter.Composite.translate(multiplierComp, multiVectorDelta);
 }
 
 function spawnBall() {
